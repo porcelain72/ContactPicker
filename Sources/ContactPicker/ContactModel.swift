@@ -19,10 +19,12 @@ public class ContactModel: ObservableObject {
 
             DispatchQueue.global(qos: .userInitiated).async {
                 let keys: [CNKeyDescriptor] = [
+                    CNContactPostalAddressesKey as CNKeyDescriptor,
                     CNContactGivenNameKey as CNKeyDescriptor,
                     CNContactFamilyNameKey as CNKeyDescriptor,
                     CNContactPhoneNumbersKey as CNKeyDescriptor,
-                    CNContactEmailAddressesKey as CNKeyDescriptor
+                    CNContactEmailAddressesKey as CNKeyDescriptor,
+                    CNContactThumbnailImageDataKey as CNKeyDescriptor
                 ]
                 let request = CNContactFetchRequest(keysToFetch: keys)
 
