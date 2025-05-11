@@ -33,7 +33,7 @@ public struct ContactPickerView: View {
                             }
                         }
                     }
-                    .listStyle(.insetGrouped)
+                    .listStyle(SidebarListStyle())
 
                     VStack {
                         Spacer()
