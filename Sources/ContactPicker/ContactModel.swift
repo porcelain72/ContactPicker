@@ -17,26 +17,30 @@ public class ContactModel: ObservableObject {
         store.requestAccess(for: .contacts) { granted, _ in
             guard granted else { return }
 
-            let keys: [CNKeyDescriptor] = [
-                CNContactGivenNameKey as CNKeyDescriptor,
-                CNContactFamilyNameKey as CNKeyDescriptor,
-                CNContactPhoneNumbersKey as CNKeyDescriptor,
-                CNContactEmailAddressesKey as CNKeyDescriptor
-            ]
-            let request = CNContactFetchRequest(keysToFetch: keys)
+            DispatchQueue.global(qos: .userInitiated).async {
+                let keys: [CNKeyDescriptor] = [
+                    CNContactGivenNameKey as CNKeyDescriptor,
+                    CNContactFamilyNameKey as CNKeyDescriptor,
+                    CNContactPhoneNumbersKey as CNKeyDescriptor,
+                    CNContactEmailAddressesKey as CNKeyDescriptor
+                ]
+                let request = CNContactFetchRequest(keysToFetch: keys)
 
-            var fetched: [ContactWrapper] = []
-            do {
-                try store.enumerateContacts(with: request) { contact, _ in
-                    fetched.append(ContactWrapper(id: contact.identifier, contact: contact))
+                var fetched: [ContactWrapper] = []
+
+                do {
+                    try store.enumerateContacts(with: request) { contact, _ in
+                        fetched.append(ContactWrapper(id: contact.identifier, contact: contact))
+                    }
+
+                    DispatchQueue.main.async {
+                        self.allContacts = fetched
+                        self.contacts = fetched
+                        self.filteredContacts = fetched
+                    }
+                } catch {
+                    print("Failed to fetch contacts: \(error)")
                 }
-                DispatchQueue.main.async {
-                    self.allContacts = fetched
-                    self.contacts = fetched
-                    self.filteredContacts = fetched
-                }
-            } catch {
-                print("Failed to fetch contacts: \(error)")
             }
         }
     }
