@@ -10,7 +10,7 @@ public struct ContactPickerView: View {
     }
 
     public var body: some View {
-        HStack(alignment: .top, spacing: 0) {
+        HStack(spacing: 0) {
             VStack(alignment: .leading) {
                 TextField("Search contacts", text: $searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -34,6 +34,16 @@ public struct ContactPickerView: View {
                         }
                     }
                     .listStyle(SidebarListStyle())
+<<<<<<< HEAD
+                    .overlay(
+                        VStack {
+                            Spacer()
+                            ForEach(sectionIndexTitles, id: \.self) { letter in
+                                Button(letter) {
+                                    withAnimation {
+                                        scrollProxy.scrollTo(letter, anchor: .top)
+                                    }
+=======
 
                     VStack {
                         Spacer()
@@ -41,15 +51,17 @@ public struct ContactPickerView: View {
                             Button(letter) {
                                 withAnimation {
                                     scrollProxy.scrollTo(letter, anchor: .top)
+>>>>>>> ed4edab13a56c965f86a413c2a3f4a125e6cb17b
                                 }
+                                .font(.caption)
+                                .padding(.vertical, 1)
+                                .buttonStyle(PlainButtonStyle())
                             }
-                            .font(.caption)
-                            .padding(.vertical, 1)
-                            .buttonStyle(PlainButtonStyle())
+                            Spacer()
                         }
-                        Spacer()
-                    }
-                    .frame(maxHeight: .infinity, alignment: .center)
+                        .padding(.trailing, 4)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    )
                 }
 
                 if let selected = model.selectedContact {
@@ -96,7 +108,6 @@ public struct ContactPickerView: View {
     }
 }
 
-// Locale extension for localized collation
 fileprivate extension Locale {
     var collator: Collator {
         return Collator(locale: self)
