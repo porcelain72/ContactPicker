@@ -34,7 +34,6 @@ public struct ContactPickerView: View {
                         }
                     }
                     .listStyle(SidebarListStyle())
-<<<<<<< HEAD
                     .overlay(
                         VStack {
                             Spacer()
@@ -43,15 +42,7 @@ public struct ContactPickerView: View {
                                     withAnimation {
                                         scrollProxy.scrollTo(letter, anchor: .top)
                                     }
-=======
 
-                    VStack {
-                        Spacer()
-                        ForEach(sectionIndexTitles, id: \.self) { letter in
-                            Button(letter) {
-                                withAnimation {
-                                    scrollProxy.scrollTo(letter, anchor: .top)
->>>>>>> ed4edab13a56c965f86a413c2a3f4a125e6cb17b
                                 }
                                 .font(.caption)
                                 .padding(.vertical, 1)
